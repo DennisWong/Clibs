@@ -1,4 +1,4 @@
-void trimPrefix(char *str) 
+void trimPrefixBlank(char *str) 
 {
     int i, j;
     int blank = 0;
@@ -14,7 +14,7 @@ void trimPrefix(char *str)
     }
 }
 
-void trimSuffix(char *str) 
+void trimSuffixBlank(char *str) 
 {
     int i, j;
     int blank;
@@ -25,3 +25,21 @@ void trimSuffix(char *str)
         }
     }
 }
+
+char **strfields(const char *str, char *delim, int *rlen)
+{
+    char *str_cpy = strdup(str);
+    char *token;
+    char **fields = NULL;
+    int cnt = 0;
+    int len = strlen(str);
+
+    while ((token = strsep(&str_cpy, delim)) != NULL) {
+        fields = (char **)realloc(fields, sizeof(char *) * (cnt + 1)); 
+        fields[cnt] = strdup(token);
+        cnt++;
+    }
+    
+    *rlen = cnt;
+    return fields;
+} 
